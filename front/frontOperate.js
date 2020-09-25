@@ -32,7 +32,7 @@ async function getDataClerk() {
       ]
     )
 
-    if (choice.permissionKey) {
+    if (choice.permissionKey !== undefined) {
       const response = await fetch('/api/use_db', {
         method: 'POST',
         body: JSON.stringify({
