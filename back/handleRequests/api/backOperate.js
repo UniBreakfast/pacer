@@ -19,22 +19,22 @@ setImmediate(assignDataClerk)
 
 export async function assignDataClerk(clerkName) {
   if (clerkName) {
-    if (clerkName == process.env.PG_db_in_use) return
+    if (clerkName == process.env.PG_DB_IN_USE) return
 
     if (! (clerkName in dataClerks))
       return console.error('Unknown data clerk name')
 
-    process.env.PG_db_in_use = clerkName
+    process.env.PG_DB_IN_USE = clerkName
 
     updateConfig(clerkName)
 
     await fireOldDC()
   }
 
-  if (!process.env.PG_db_in_use)
-    process.env.PG_db_in_use = Object.keys(dataClerks)[0]
+  if (!process.env.PG_DB_IN_USE)
+    process.env.PG_DB_IN_USE = Object.keys(dataClerks)[0]
 
-  ;[operateViaDC, fireOldDC] = dataClerks[process.env.PG_db_in_use]()
+  ;[operateViaDC, fireOldDC] = dataClerks[process.env.PG_DB_IN_USE]()
 }
 
 
