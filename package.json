@@ -1,0 +1,26 @@
+{
+  "name": "pacer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UniBreakfast/pacer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UniBreakfast/pacer/issues"
+  },
+  "homepage": "https://github.com/UniBreakfast/pacer#readme",
+  "dependencies": {
+    "mongodb": "^3.6.2",
+    "mysql": "^2.18.1"
+  }
+}

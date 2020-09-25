@@ -1,0 +1,61 @@
+<div id="resolveByHandModal">
+  <div>
+    <h5>!!! ручное управление !!!</h5>
+    <h3>Message to choose one alternative</h3>
+    <div class="buttons">
+      <button>first alternative</button>
+      <button>second alternative</button>
+    </div>
+    <h5>!!! ручное управление !!!</h5>
+  </div>
+</div>
+
+<style>
+  #resolveByHandModal {
+    background: #f6f6f6;
+    border: 1px solid;
+    text-align: center;
+    overflow: auto;
+  }
+
+  #resolveByHandModal>div {
+    padding: 8px 16px 36px;
+    position: relative;
+    min-height: 100%;
+    box-sizing: border-box;
+  }
+
+  #resolveByHandModal h3 {
+    margin-top: 30px;
+  }
+
+  #resolveByHandModal h5 {
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    margin: 4px 8px;
+  }
+
+  #resolveByHandModal h5:first-child {
+    top: 0;
+    right: 0;
+  }
+
+  #resolveByHandModal h5:last-child {
+    left: 0;
+    bottom: 0;
+  }
+
+  #resolveByHandModal .buttons {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  #resolveByHandModal .buttons button {
+    margin: 4px;
+    padding: 3px 14px;
+  }
+</style>
+
+<script src="Modal.js" type="module"></script>
