@@ -11,8 +11,14 @@ button {
   padding: 5px 25px;
 }
 
+button:focus {
+  outline: none;
+  box-shadow: 0 0 1px 3px #333;
+}
+
 header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 25px;
 }
@@ -32,10 +38,12 @@ ul {
   text-align: center;
   margin: 40px 20px;
   list-style: none;
+  overflow-x: auto;
 }
 
 li {
   margin: 21px 0;
+  white-space: nowrap;
 }
 
 li>span {
@@ -45,8 +53,20 @@ li>span {
 }
 
 li>span>span {
-  margin: 0 5px;
+  margin: 0 6px;
+  display: inline-block;
 }
+
+li>span>span:nth-child(n+5) {
+  color: #999;
+}
+
+li>span>span:nth-child(1) { width: var(--width0) }
+li>span>span:nth-child(2) { width: var(--width1) }
+li>span>span:nth-child(3) { width: var(--width2) }
+li>span>span:nth-child(4) { width: var(--width3) }
+li>span>span:nth-child(5) {width: var(--width4);}
+li>span>span:nth-child(6) { width: var(--width5) }
 
 footer {
   text-align: center;

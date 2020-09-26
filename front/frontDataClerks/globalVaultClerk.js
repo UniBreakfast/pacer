@@ -1,5 +1,7 @@
 import fs from '../frontFS.js'
 import GlobalVault from '../GlobalVault.js'
+import defaults from '/center/defaultSubjectData.js'
+
 
 const {stringify, parse} = JSON,  cloneViaJSON = data => parse(stringify(data))
 
@@ -13,10 +15,13 @@ GlobalVault.defaultWays.toSave = (name, value, varNames) =>
 GlobalVault.defaultWays.toLoad = name =>
   fetch(vaultPath+`${name}.json`).then(resp => resp.ok? resp.json() : null)
 
+const vaultNames = Object.keys(defaults)
 
-if (!window.notes) window.notes = []
+vaultNames.forEach(name => {
+  if (window[name] === undefined)  window[name] = defaults[name]
+})
 
-const vault = new GlobalVault('notes')
+const vault = new GlobalVault(vaultNames)
 
 
 export default async function operate(action, subject, data, credentials) {

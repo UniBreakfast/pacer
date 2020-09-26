@@ -23,8 +23,8 @@ async function getDataClerk() {
     const choice = await resolveByHand(
       'What do we use as a data source?',
       [
-        ['localStorage', 'localStorage'],
         ['hardcoded data / RAM', 'hardcodeRAM'],
+        ['localStorage', 'localStorage'],
         ['GlobalVaults', 'globalVault'],
         [`DB selected on back end (${db})`, 'backOperations'],
         {label: 'mongo DB (need permission)',
@@ -51,9 +51,15 @@ async function getDataClerk() {
 
 export default async function operate(action, subject, data) {
   const operation = action+' '+subject
-  if (!operables.required.includes(operation)) throw `unsupported operation ''`
+  if (!operables.required.includes(operation))
+    throw `unsupported operation '${operation}'`
 
   const properOperate = await operateViaDC
+
+  const clerkName = localStorage.PG_dataClerk
+  if (!operables[clerkName].includes(operation))
+    throw `operation '${operation}' is not supported by ${clerkName} clerk`
+
   return properOperate(action, subject, data, credentials)
 
 }

@@ -1,6 +1,6 @@
-import operate from './frontOperate.js'
+import operate from '/frontOperate.js'
 
-import resolveByHand from './resolveByHand/resolveByHand.js'
+import resolveByHand from '/resolveByHand/resolveByHand.js'
 
 // const event = JSON.parse(localStorage.event)
 // delete event.id

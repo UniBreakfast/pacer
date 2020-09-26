@@ -10,15 +10,15 @@ const operables = {
   `),
 
   hardcodeRAM: list(`
-
+    read users
   `),
 
   localStorage: list(`
-
+    read users
   `),
 
   globalVault: list(`
-
+    read users
   `),
 
   backOperations: list(`
@@ -39,5 +39,5 @@ export default operables
 
 
 function list(multiline) {
-  return multiline.split('\n  ').filter(line => line.trim())
+  return multiline.split(/\n */g).filter(line => line.trim())
 }

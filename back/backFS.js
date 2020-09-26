@@ -12,7 +12,7 @@ export {fs, stat}
 
 
 // ISO-format dates
-const date2str = date => stringify(date).slice(1,20).replace('T',' ')
+const dateToISOstr = date => stringify(date).slice(1,20).replace('T',' ')
 
 
 // custom fs functions
@@ -34,7 +34,7 @@ export const remove = path => fsp.unlink(path)
 export const explore =(path, depth=32)=> stat(path).then(stats => {
   const name = path.match(/[^/\\]*$/)[0],
         {mtime, size} = stats,  dir = stats.isDirectory(),
-        report = {name, date: date2str(mtime)}
+        report = {name, date: dateToISOstr(mtime)}
   return !dir? assign(report, {size}) : depth? readdir(path)
     .then(list => all(list.map(name => explore(path+'/'+name, depth-1)))
       .then(reports => assign(report, {subs: reports}))) :
