@@ -8,6 +8,7 @@ import handleFSaccess from './handleFSaccess.js'
 
 const fsp = fs.promises,  {stat} = fsp
 const { stringify } = JSON
+const { assign } = Object
 
 ServerResponse.prototype.json = function (obj) {
   this.setHeader('Content-Type', typeDict['json'])
@@ -32,8 +33,13 @@ export default async function handleRequest(req, resp) {
 
     try {
         let path = process.cwd()+(url.startsWith('/center/')? '' : '/front')+url
-        if ((await stat(path).catch(_=> stat(path+='.html'))).isDirectory() &&
-          (await stat(path+='/index.html')).isDirectory())  throw 0
+        const fsItem = await stat(path).catch(() => stat(path+='.html'))
+          .catch(() => { throw `"${path.slice(0, -5)}" not found` })
+        if (fsItem.isDirectory()) {
+          const page = await stat(path+='/index.html')
+            .catch(() => { throw `"${path}" not found` })
+          if (page.isDirectory())  throw `"${path}" is not a file`
+        }
         const match = path.match(/\.(\w+)$/), ext = match? match[1] : 'html'
 
         fs.createReadStream(path).pipe(resp)

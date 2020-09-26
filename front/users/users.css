@@ -1,0 +1,57 @@
+body, button {
+  font-family: Trebuchet MS, sans-serif;
+}
+
+button {
+  border: none;
+  font-weight: bold;
+  color: white;
+  background-color: #777;
+  border-radius: 99px;
+  padding: 5px 25px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 25px;
+}
+
+header h3 {
+  font-weight: normal;
+}
+
+header h3 span {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin-left: 6px;
+}
+
+ul {
+  padding: 0;
+  text-align: center;
+  margin: 40px 20px;
+  list-style: none;
+}
+
+li {
+  margin: 21px 0;
+}
+
+li>span {
+  background-color: #ddd;
+  padding: 7px 11px;
+  border-radius: 8px;
+}
+
+li>span>span {
+  margin: 0 5px;
+}
+
+footer {
+  text-align: center;
+}
+
+footer button {
+  margin: 0 10px;
+}

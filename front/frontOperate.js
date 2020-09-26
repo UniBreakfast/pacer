@@ -1,3 +1,5 @@
+import operables from '../center/operables.js'
+
 import resolveByHand from './resolveByHand/resolveByHand.js'
 
 import credentials from './credentials.js'
@@ -48,6 +50,9 @@ async function getDataClerk() {
 }
 
 export default async function operate(action, subject, data) {
+  const operation = action+' '+subject
+  if (!operables.required.includes(operation)) throw `unsupported operation ''`
+
   const properOperate = await operateViaDC
   return properOperate(action, subject, data, credentials)
 
