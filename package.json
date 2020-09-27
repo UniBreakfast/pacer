@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/UniBreakfast/pacer#readme",
   "dependencies": {
-    "c4console": "^1.0.7",
+    "c4console": "^1.0.8",
     "mongodb": "^3.6.2",
     "mysql": "^2.18.1"
   }

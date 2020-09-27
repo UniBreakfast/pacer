@@ -4,7 +4,7 @@ const {PG_MYSQL_HOST, PG_DB_NAME, PG_DB_USER, PG_DB_PASS} = process.env
 
 const uri = `mysql://${PG_DB_USER}:${PG_DB_PASS}@${
                     PG_MYSQL_HOST}/${PG_DB_NAME}`
-let connection
+let defaults, connection
 connect()
 
 const Connection = connection.constructor
@@ -22,18 +22,31 @@ Connection.prototype.query = function (sql, callback) {
 }
 
 
+const clerk = {
+  async read(subject) {
+    try {
+      return await connection.query(`SELECT * FROM \`${subject}\``)
+    } catch (err) {
+      if (err.code == 'ER_NO_SUCH_TABLE') return defaults[subject]
+      else throw err
+    }
+  },
+}
 
-module.exports = [operate, close]
+
+module.exports = function getExported(defaultValues) {
+  defaults = defaultValues
+  return [operate, close]
+}
 
 
 async function operate(action, subject, data, lastTry) {
   try {
     if (connection.state == 'disconnected') throw null
-    if (action == 'read') {
-      return await connection.query(`SELECT * FROM \`${subject}\``)
-    }
+    return await clerk[action](subject, data)
   } catch (err) {
-    if (err != null) console.error(err)
+    if (err != null) console.error(err.code == 'ECONNRESET' ?
+                                    'MySQL connection reset' : err)
     if (lastTry) throw err
 
     await connect()

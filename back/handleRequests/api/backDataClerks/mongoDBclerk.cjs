@@ -14,7 +14,7 @@ connect()
 const clerk = {
   async read(db, subject) {
     return await db.collection(subject).find().toArray()
-  }
+  },
 }
 
 

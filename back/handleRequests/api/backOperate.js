@@ -40,7 +40,7 @@ export async function assignDataClerk(clerkName) {
 }
 
 
-export function operate(action, subject, data, credentials) {
+export async function operate(action, subject, data, credentials) {
   const operation = action+' '+subject
   if (!operables.required.includes(operation))
     throw `unsupported operation '${operation}'`
@@ -49,7 +49,8 @@ export function operate(action, subject, data, credentials) {
   if (!operables[clerkName].includes(operation))
     throw `operation '${operation}' is not supported by ${clerkName} clerk`
 
-  return operateViaDC(action, subject, data)
+  if (!operateViaDC) await assignDataClerk()
+  return await operateViaDC(action, subject, data)
 }
 
 

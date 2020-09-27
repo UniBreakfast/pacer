@@ -8,6 +8,7 @@ setImmediate(() => {
   const dev = process.env.PG_DEV_MODE
 
   createServer(handleRequest).listen(port, () => {
+    console.clear()
     console.info(`Server started${dev? ` at http://localhost:${port}` : ''}`)
   })
 

@@ -30,7 +30,7 @@ const operables = {
   `),
 
   mySQL: list(`
-
+    read users
   `),
 }
 
