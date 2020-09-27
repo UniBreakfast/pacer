@@ -1,7 +1,10 @@
 const {stringify} = JSON
 
-export default function operate(action, subject, data, credentials) {
-  return fetch(`/api/${action}/${subject}`, {
+export default async function operate(action, subject, data, credentials) {
+  const response = await fetch(`/api/${action}/${subject}`, {
     method: 'POST', body: stringify({data, credentials})
-  }).then(resp => resp.json())
+  })
+
+  if (response.ok) return await response.json()
+  else throw await response.json()
 }

@@ -6,12 +6,22 @@ const uri = `mongodb+srv://${PG_DB_USER}:${PG_DB_PASS}@${
                 PG_MONGO_HOST}/${PG_DB_NAME}?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
 
-let client, pgDB
+let defaults, client, pgDB
 
 connect()
 
 
-module.exports = [operate, close]
+const clerk = {
+  async read(db, subject) {
+    return await db.collection(subject).find().toArray()
+  }
+}
+
+
+module.exports = function getExported(defaultValues) {
+  defaults = defaultValues
+  return [operate, close]
+}
 
 
 async function operate(action, subject, data, lastTry) {
@@ -19,9 +29,9 @@ async function operate(action, subject, data, lastTry) {
     if (!client.isConnected()) throw null
     const db = await pgDB
 
-    if (`${action} ${subject}` == 'read events') {
-      return await db.collection(subject).find().toArray()
-    }
+    global.db = db
+
+    return await clerk[action](db, subject, data)
 
     if (`${action} ${subject}` == 'insert events') {
       const event = data

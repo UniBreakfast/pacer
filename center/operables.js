@@ -26,7 +26,7 @@ const operables = {
   `),
 
   mongoDB: list(`
-
+    read users
   `),
 
   mySQL: list(`

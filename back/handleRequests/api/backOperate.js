@@ -4,11 +4,13 @@ const fsp = fs.promises
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
+import operables from '../../../center/operables.js'
+import defaults from '../../../center/defaultSubjectData.js'
 
 
 export const dataClerks = {
-  mongoDB: () => require('./backDataClerks/mongoDBclerk.cjs'),
-  mySQL: () => require('./backDataClerks/mySQLclerk.cjs'),
+  mongoDB: () => require('./backDataClerks/mongoDBclerk.cjs')(defaults),
+  mySQL: () => require('./backDataClerks/mySQLclerk.cjs')(defaults),
 }
 
 let operateViaDC, fireOldDC
@@ -39,6 +41,14 @@ export async function assignDataClerk(clerkName) {
 
 
 export function operate(action, subject, data, credentials) {
+  const operation = action+' '+subject
+  if (!operables.required.includes(operation))
+    throw `unsupported operation '${operation}'`
+
+  const clerkName = process.env.PG_DB_IN_USE
+  if (!operables[clerkName].includes(operation))
+    throw `operation '${operation}' is not supported by ${clerkName} clerk`
+
   return operateViaDC(action, subject, data)
 }
 

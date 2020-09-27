@@ -29,7 +29,8 @@ export default async function handleAPI(req, resp) {
     console.error(err)
 
     resp.statusCode = 417
-    resp.json('API worked fine... until it didn\'t... ' +
-              'I really hope it wasn\'t too important')
+    resp.json(typeof err == 'string'? err :
+      'API worked fine... until it didn\'t... ' +
+        'I really hope it wasn\'t too important')
   }
 }

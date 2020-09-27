@@ -1,4 +1,4 @@
-import operables from '../center/operables.js'
+import operables from '/center/operables.js'
 
 import resolveByHand from './resolveByHand/resolveByHand.js'
 
@@ -60,6 +60,5 @@ export default async function operate(action, subject, data) {
   if (!operables[clerkName].includes(operation))
     throw `operation '${operation}' is not supported by ${clerkName} clerk`
 
-  return properOperate(action, subject, data, credentials)
-
+  return await properOperate(action, subject, data, credentials)
 }

@@ -76,7 +76,7 @@ function buildUserItem(user) {
   return `
     <li>
       <span>
-        <span>${user.id}</span>
+        <span>${user.id || user._id}</span>
         <span>${user.login}</span>
         <span>${user.password}</span>
         <span>${user.hash}</span>
