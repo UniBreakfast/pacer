@@ -17,16 +17,24 @@ GlobalVault.defaultWays.toLoad = name =>
 
 const vaultNames = Object.keys(defaults)
 
-vaultNames.forEach(name => {
+const vaults = Promise.all(vaultNames.map(async name => {
   if (window[name] === undefined)  window[name] = defaults[name]
-})
+  return [name, new GlobalVault(name)]
+})).then(Object.fromEntries)
 
-const vault = new GlobalVault(vaultNames)
+
+
+const clerk = {
+  async read(subject) {
+    const allVaults = await vaults
+    try { await allVaults[subject].load() }
+    catch { window[subject] = cloneViaJSON(defaults[subject]) }
+    return window[subject]
+  }
+}
+
 
 
 export default async function operate(action, subject, data, credentials) {
-  if (action == 'read') {
-    await vault.load()
-    return cloneViaJSON(window[subject])
-  }
+  return clerk[action](subject, data)
 }

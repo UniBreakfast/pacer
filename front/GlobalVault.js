@@ -61,7 +61,7 @@ function reassignVar(name, value) {
     } else  window[name] = value
     console.log(name+' loaded')
   }
-  catch { console.log(`unable to load ${name} variable`) }
+  catch { throw `unable to load ${name} variable` }
 
 }
 

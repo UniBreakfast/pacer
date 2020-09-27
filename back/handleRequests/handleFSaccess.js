@@ -22,8 +22,13 @@ export default async function handleFSaccess(req, resp) {
 
       else {
         let path = process.cwd()+url
-        if ((await stat(path).catch(_=> stat(path+='.html'))).isDirectory() &&
-          (await stat(path+='/index.html')).isDirectory())  throw 0
+        const fsItem = await stat(path).catch(() => stat(path+='.html'))
+          .catch(() => { throw `"${path.slice(0, -5)}" not found` })
+        if (fsItem.isDirectory()) {
+          const page = await stat(path+='/index.html')
+            .catch(() => { throw `"${path}" not found` })
+          if (page.isDirectory())  throw `"${path}" is not a file`
+        }
         const match = path.match(/\.(\w+)$/), ext = match? match[1] : 'html'
 
         fs.createReadStream(path).pipe(resp)

@@ -3,6 +3,7 @@ import operate from '/frontOperate.js'
 import resolveByHand from '/resolveByHand/resolveByHand.js'
 
 operate('read', 'users').then(showUsers).catch(console.error)
+  .then(showDataClerk)
 
 const dateToISOstr = date => JSON.stringify(date).slice(1,20).replace('T',' ')
 
@@ -40,7 +41,21 @@ const userList = document.getElementById('userList')
 
 fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
+showDataClerk()
 
+async function showDataClerk() {
+  const label = fireBtn.children[0]
+  const assignedAtFront = localStorage.PG_dataClerk
+  if (assignedAtFront) {
+    if (assignedAtFront != 'backOperations') label.innerText = assignedAtFront
+    else {
+      const db = await fetch('/api/db_in_use')
+                          .then(resp => resp.text()).catch(console.error)
+      label.innerText = db
+    }
+    fireBtn.hidden = false
+  } else fireBtn.hidden = true
+}
 
 function showUsers(users) {
   userList.innerHTML = users.map(buildUserItem).join('')

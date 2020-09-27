@@ -22,7 +22,7 @@ const operables = {
   `),
 
   backOperations: list(`
-
+    read users
   `),
 
   mongoDB: list(`

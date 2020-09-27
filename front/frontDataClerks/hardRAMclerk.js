@@ -10,6 +10,6 @@ const clerk = {
 }
 
 
-export default function operate(action, subject, data) {
-  return Promise.resolve(clerk[action](subject, data))
+export default async function operate(action, subject, data) {
+  return clerk[action](subject, data)
 }

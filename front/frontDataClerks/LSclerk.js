@@ -5,7 +5,7 @@ const {stringify, parse} = JSON
 
 
 const clerk = {
-  read(subject, data) {
+  read(subject) {
     try { return parse(localStorage['PG_'+subject]) }
     catch { return defaults[subject] }
   }
