@@ -1,4 +1,4 @@
-export class Modal {
+export default class Modal {
   constructor (selector_or_path, options={}) {
     // { inDOMwhenHidden=true, rememberSizePlace=true, hideOnGlassClick=true,
     // onshow, onhide, fillcb, top, left, width, height }

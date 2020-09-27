@@ -1,0 +1,53 @@
+<div id="createUserModal" class="modal">
+  <h3>Create new user</h3>
+  <form>
+    <label>id: <input type="text"></label>
+    <label>login: <input type="text"></label>
+    <label>password: <input type="text"></label>
+    <label>hash: <input type="text"></label>
+    <label>created: <input type="datetime-local"></label>
+    <label>modified: <input type="datetime-local"></label>
+  </form>
+  <div class="buttons">
+    <input type="checkbox" id="keepOpenCheck">
+    <label for="keepOpenCheck">don't close on</label>
+    <button>Create</button>
+    <button>Cancel</button>
+  </div>
+</div>
+
+<style>
+  #createUserModal {
+    text-align: center;
+  }
+
+  #createUserModal form {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  #createUserModal form label {
+    width: 280px;
+    text-align: right;
+    margin: 4px 0;
+  }
+
+  #createUserModal input {
+    text-align: center;
+  }
+
+  #createUserModal [type="datetime-local"] {
+    padding-left: 10px;
+  }
+
+  #createUserModal .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 350px;
+    margin: 20px auto;
+  }
+
+  #createUserModal {}
+</style>

@@ -1,3 +1,5 @@
+import Modal from '/Modal.js'
+
 import operate from '/frontOperate.js'
 
 import resolveByHand from '/resolveByHand/resolveByHand.js'
@@ -37,11 +39,17 @@ const users = [
 
 const userList = document.getElementById('userList')
 
-// showUsers()
 
 fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
 showDataClerk()
+
+const width = 430,  left = innerWidth/2 - width/2,  top = innerHeight/3.5
+
+const createUserModal = new Modal('users/create.htm', {top, left, width})
+
+createUserBtn.onclick = () => createUserModal.show()
+
 
 async function showDataClerk() {
   const label = fireBtn.children[0]
