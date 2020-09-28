@@ -46,9 +46,24 @@ showDataClerk()
 
 const width = 430,  left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
-const createUserModal = new Modal('users/create.htm', {top, left, width})
+const createUserModal = new Modal('users/create.htm', {top, left, width,
+  onshow() {
+    cancelCreateBtn.onclick = () => createUserModal.hide()
+
+    createUserForm.onsubmit = async e => {
+      e.preventDefault()
+      await createUser(new FormData(createUserForm))
+      await operate('read', 'users').then(showUsers).catch(console.error)
+      createUserForm.reset()
+      if (!keepOpenBox.checked) createUserModal.hide()
+    }
+  }
+})
 
 createUserBtn.onclick = () => createUserModal.show()
+
+
+
 
 
 async function showDataClerk() {
@@ -93,4 +108,13 @@ function buildUserItem(user) {
       </span>
     </li>
   `
+}
+
+async function createUser(formData) {
+  const user = Object.fromEntries([...formData.entries()])
+  const id = await operate('create', 'users', [user])
+  return id
+}
+
+function readUsers() {
 }

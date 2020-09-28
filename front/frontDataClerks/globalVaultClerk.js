@@ -30,7 +30,11 @@ const clerk = {
     try { await allVaults[subject].load() }
     catch { window[subject] = cloneViaJSON(defaults[subject]) }
     return window[subject]
-  }
+  },
+
+  async create(subject) {
+
+  },
 }
 
 

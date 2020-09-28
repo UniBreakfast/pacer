@@ -11,26 +11,32 @@ const operables = {
 
   hardcodeRAM: list(`
     read users
+    create users
   `),
 
   localStorage: list(`
     read users
+    create users
   `),
 
   globalVault: list(`
     read users
+    create users
   `),
 
   backOperations: list(`
     read users
+    create users
   `),
 
   mongoDB: list(`
     read users
+    create users
   `),
 
   mySQL: list(`
     read users
+    create users
   `),
 }
 

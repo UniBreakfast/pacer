@@ -1,24 +1,26 @@
 <div id="createUserModal" class="modal">
   <h3>Create new user</h3>
-  <form>
-    <label>id: <input type="text"></label>
-    <label>login: <input type="text"></label>
-    <label>password: <input type="text"></label>
-    <label>hash: <input type="text"></label>
-    <label>created: <input type="datetime-local"></label>
-    <label>modified: <input type="datetime-local"></label>
+  <button type="reset">Reset</button>
+  <form id="createUserForm">
+    <label>id: <input type="text" name="id"></label>
+    <label>login: <input type="text" name="login"></label>
+    <label>password: <input type="text" name="password"></label>
+    <label>hash: <input type="text" name="hash"></label>
+    <label>created: <input type="datetime-local" name="created"></label>
+    <label>modified: <input type="datetime-local" name="modified"></label>
   </form>
   <div class="buttons">
-    <input type="checkbox" id="keepOpenCheck">
-    <label for="keepOpenCheck">don't close on</label>
-    <button>Create</button>
-    <button>Cancel</button>
+    <input type="checkbox" id="keepOpenBox">
+    <label for="keepOpenBox">don't close on</label>
+    <button type="submit" form="createUserForm">Create</button>
+    <button id="cancelCreateBtn">Cancel</button>
   </div>
 </div>
 
 <style>
   #createUserModal {
     text-align: center;
+    position: relative;
   }
 
   #createUserModal form {
@@ -33,12 +35,18 @@
     margin: 4px 0;
   }
 
+  #createUserModal>button {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+  }
+
   #createUserModal input {
     text-align: center;
   }
 
   #createUserModal [type="datetime-local"] {
-    padding-left: 10px;
+    padding-left: 12px;
   }
 
   #createUserModal .buttons {
@@ -49,5 +57,13 @@
     margin: 20px auto;
   }
 
-  #createUserModal {}
+  #keepOpenBox {
+    transform: translateY(1px);
+    box-shadow: 0 0 0 2px #eee, 0 0 0 0 #bbb, inset 0 1px 3px #333
+  }
+
+  #keepOpenBox:hover, label:hover ~ #keepOpenBox {
+    transform: translateY(0);
+    box-shadow: 0 0 0 2px #eee, 0 4px 9px 4px #bbb, inset 0 1px 3px #333;
+  }
 </style>
