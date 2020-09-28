@@ -108,7 +108,7 @@ footer button {
 .modal {
   border-radius: 15px;
   border: none !important;
-  box-shadow: 0 20px 100px #333;
+  box-shadow: 0 2px 5px 1px #444, 0 20px 100px #333;
   background-color: #eee;
   padding: 10px 30px;
   cursor: grabbing;
