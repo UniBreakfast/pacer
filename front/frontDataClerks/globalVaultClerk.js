@@ -32,7 +32,7 @@ const clerk = {
     return window[subject]
   },
 
-  async create(subject) {
+  async create(subject, dataToAdd=[]) {
 
   },
 }
@@ -41,4 +41,11 @@ const clerk = {
 
 export default async function operate(action, subject, data, credentials) {
   return clerk[action](subject, data)
+}
+
+async function giveId() {
+  await vaults.lastId.load()
+  lastId++
+  await vaults.lastId.save()
+  return lastId
 }

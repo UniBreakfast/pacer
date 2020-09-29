@@ -1,4 +1,4 @@
-export const id = 999
+export const lastId = {value: 333}
 
 export const users = [
   {

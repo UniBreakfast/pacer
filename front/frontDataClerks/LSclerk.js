@@ -38,5 +38,6 @@ export default async function operate(action, subject, data) {
 
 
 function giveId() {
-  return localStorage.PG_id = localStorage.PG_id? +localStorage.PG_id+1 : 999
+  return localStorage.PG_lastId = localStorage.PG_lastId?
+                        +localStorage.PG_lastId+1 : defaults.lastId
 }

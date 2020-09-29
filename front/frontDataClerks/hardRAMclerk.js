@@ -11,7 +11,7 @@ const clerk = {
     return cloneViaJSON(data[subject] || defaults[subject])
   },
 
-  asynccreate(subject, dataToAdd=[]) {
+  create(subject, dataToAdd=[]) {
     dataToAdd = cloneViaJSON(assureArr(dataToAdd))
 
     if (!data[subject]) data[subject] = defaults[subject]
@@ -38,5 +38,6 @@ export default async function operate(action, subject, data) {
 }
 
 function giveId() {
-  return ++data[id]
+  return data.lastId.value = data.lastId.value?
+                  data.lastId.value+1 : defaults.lastId
 }
