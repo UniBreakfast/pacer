@@ -22,5 +22,37 @@
     "hash": "to_be_generated",
     "created": "2020-09-27T05:01:17.109Z",
     "modified": "2020-09-27T05:01:17.109Z"
+  },
+  {
+    "id": "4",
+    "login": "Tony",
+    "password": "qwerty",
+    "hash": "1234",
+    "created": "2020-09-29T20:08:04.134Z",
+    "modified": "2020-09-29T20:08:04.134Z"
+  },
+  {
+    "id": 1003,
+    "login": "Santa",
+    "password": "",
+    "hash": "",
+    "created": "2020-09-29T20:18:37.006Z",
+    "modified": "2020-09-29T20:18:37.006Z"
+  },
+  {
+    "id": "5",
+    "login": "Barry",
+    "password": "Speed",
+    "hash": "433",
+    "created": "2002-01-01T11:11",
+    "modified": "2002-01-01T11:11"
+  },
+  {
+    "id": 1004,
+    "login": "Tony",
+    "password": "",
+    "hash": "",
+    "created": "2020-09-29T20:20:02.759Z",
+    "modified": "2020-09-29T20:20:02.759Z"
   }
 ]

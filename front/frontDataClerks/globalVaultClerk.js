@@ -5,6 +5,9 @@ import defaults from '/center/defaultSubjectData.js'
 
 const {stringify, parse} = JSON,  cloneViaJSON = data => parse(stringify(data))
 
+const assureArr = value => Array.isArray(value)? value : [value]
+
+
 const vaultPath = 'writable/vaults/'
 
 GlobalVault.defaultWays.toSave = (name, value, varNames) =>
@@ -33,7 +36,25 @@ const clerk = {
   },
 
   async create(subject, dataToAdd=[]) {
+    const allVaults = await vaults
 
+    dataToAdd = cloneViaJSON(assureArr(dataToAdd))
+
+    await allVaults[subject].load()
+
+    await Promise.all(dataToAdd.map(async item => {
+      if (!item.id) item.id = await giveId()
+      if (!item.created || !item.modified) {
+        const date = new Date
+        if (!item.created) item.created = date
+        if (!item.modified) item.modified = date
+      }
+    }))
+
+    window[subject].push(...dataToAdd)
+    await allVaults[subject].save()
+
+    return dataToAdd.map(item => item.id)
   },
 }
 
@@ -44,8 +65,10 @@ export default async function operate(action, subject, data, credentials) {
 }
 
 async function giveId() {
-  await vaults.lastId.load()
+  const allVaults = await vaults
+  try { await allVaults.lastId.load() }
+  catch { lastId = defaults.lastId }
   lastId++
-  await vaults.lastId.save()
+  await allVaults.lastId.save()
   return lastId
 }
