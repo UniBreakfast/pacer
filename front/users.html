@@ -19,7 +19,17 @@
     <h3>the server sees you as <span id="currentUserLabel">guest</span></h3>
   </header>
 
-  <ul id="userList"></ul>
+  <section id="userView">
+    <span id="columnRow" hidden>
+      <span>id</span>
+      <span>login</span>
+      <span>password</span>
+      <span>hash</span>
+      <span>created</span>
+      <span>modified</span>
+    </span>
+    <ul id="userList"></ul>
+  </section>
 
   <footer>
     <button id="createUserBtn">Create User</button>

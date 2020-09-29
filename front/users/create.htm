@@ -10,8 +10,16 @@
     <label>modified: <input type="datetime-local" name="modified"></label>
   </form>
   <div class="buttons">
-    <input type="checkbox" id="keepOpenBox">
-    <label for="keepOpenBox">don't close on</label>
+    <div>
+      <label>
+        <input type="checkbox" id="keepFilledBox">
+        don't reset on
+      </label>
+      <label>
+        <input type="checkbox" id="keepOpenBox">
+        don't close on
+      </label>
+    </div>
     <button type="submit" form="createUserForm">Create</button>
     <button id="cancelCreateBtn">Cancel</button>
   </div>
@@ -49,7 +57,7 @@
     padding-left: 12px;
   }
 
-  #createUserModal .buttons {
+  #createUserModal>.buttons {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -57,12 +65,25 @@
     margin: 20px auto;
   }
 
-  #keepOpenBox {
+  #createUserModal>.buttons>div {
+    display: flex;
+    flex-flow: column;
+  }
+
+  #createUserModal>.buttons label {
+    margin-bottom: 3px;
+  }
+
+  #createUserModal>.buttons input {
     transform: translateY(1px);
     box-shadow: 0 0 0 2px #eee, 0 0 0 0 #bbb, inset 0 1px 3px #333
   }
 
-  #keepOpenBox:hover, label:hover ~ #keepOpenBox {
+  #createUserModal>.buttons label:hover {
+    z-index: 1;
+  }
+
+  #createUserModal>.buttons label:hover>input {
     transform: translateY(0);
     box-shadow: 0 0 0 2px #eee, 0 4px 9px 4px #bbb, inset 0 1px 3px #333;
   }

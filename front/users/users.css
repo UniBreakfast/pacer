@@ -57,6 +57,18 @@ header h3 span {
   margin-left: 6px;
 }
 
+#userView span>span {
+  margin: 0 6px;
+  display: inline-block;
+}
+
+#columnRow {
+  display: block;
+  text-align: center;
+  transform: translateY(30px);
+  color: #999;
+}
+
 ul {
   padding: 0;
   text-align: center;
@@ -77,21 +89,16 @@ li>span {
   box-shadow: 0 1px 4px #777;
 }
 
-li>span>span {
-  margin: 0 6px;
-  display: inline-block;
-}
-
 li>span>span:nth-child(n+5) {
   color: #999;
 }
 
-li>span>span:nth-child(1) { width: var(--width0) }
-li>span>span:nth-child(2) { width: var(--width1) }
-li>span>span:nth-child(3) { width: var(--width2) }
-li>span>span:nth-child(4) { width: var(--width3) }
-li>span>span:nth-child(5) {width: var(--width4);}
-li>span>span:nth-child(6) { width: var(--width5) }
+#userView span>span:nth-child(1) { width: var(--width0) }
+#userView span>span:nth-child(2) { width: var(--width1) }
+#userView span>span:nth-child(3) { width: var(--width2) }
+#userView span>span:nth-child(4) { width: var(--width3) }
+#userView span>span:nth-child(5) {width: var(--width4);}
+#userView span>span:nth-child(6) { width: var(--width5) }
 
 footer {
   text-align: center;
@@ -108,7 +115,7 @@ footer button {
 .modal {
   border-radius: 15px;
   border: none !important;
-  box-shadow: 0 2px 5px 1px #444, 0 20px 100px #333;
+  box-shadow: 0 20px 100px #666, 0 2px 5px 1px #444;
   background-color: #eee;
   padding: 10px 30px;
   cursor: grabbing;

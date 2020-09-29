@@ -9,33 +9,6 @@ operate('read', 'users').then(showUsers).catch(console.error)
 
 const dateToISOstr = date => JSON.stringify(date).slice(1,20).replace('T',' ')
 
-const users = [
-  {
-    id: 1,
-    login: 'Bob',
-    password: 'silent',
-    hash: 'to_be_generated',
-    created: new Date,
-    modified: new Date,
-  },
-  {
-    id: 2,
-    login: 'The last airbender',
-    password: '123',
-    hash: 'to_be_generated',
-    created: new Date,
-    modified: new Date,
-  },
-  {
-    id: 3,
-    login: 'Teresa',
-    password: 'very_very_long_password',
-    hash: 'to_be_generated',
-    created: new Date,
-    modified: new Date,
-  },
-]
-
 
 const userList = document.getElementById('userList')
 
@@ -54,7 +27,7 @@ const createUserModal = new Modal('users/create.htm', {top, left, width,
       e.preventDefault()
       await createUser(new FormData(createUserForm))
       await operate('read', 'users').then(showUsers).catch(console.error)
-      createUserForm.reset()
+      if (!keepFilledBox.checked) createUserForm.reset()
       if (!keepOpenBox.checked) createUserModal.hide()
     }
   }
@@ -83,14 +56,16 @@ async function showDataClerk() {
 function showUsers(users) {
   userList.innerHTML = users.map(buildUserItem).join('')
   if (userList.children.length) {
+    columnRow.hidden = false
+    userView.style = ''
     const allWidths = [...userList.querySelectorAll('li>span')]
-      .map(span => [...span.children]
-          .map(span => span.getBoundingClientRect().width))
-    const widths = allWidths[0]
+                        .map(span => [...span.children]
+                          .map(span => span.getBoundingClientRect().width))
+    userView.style = allWidths[0]
       .map((_, i) => Math.max(...allWidths.map(widths => widths[i])))
-    widths.forEach((width, i) =>
-      userList.style.setProperty('--width'+i, width+'px'))
+      .map((width, i) => `--width${i}:${width}px`).join('; ')
   } else {
+    columnRow.hidden = true
     userList.innerHTML = `<h3>no users found</h3>`
   }
 }
