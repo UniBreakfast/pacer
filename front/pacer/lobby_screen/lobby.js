@@ -71,12 +71,14 @@ function setErrorFor(input, message) {
     small.innerText = message
 
     // add error class 
-    formControl.className = 'form-control error'
+    formControl.classList.add('error')
+    formControl.classList.remove('success')
 }
 
 function setSuccessFor(input) {
     const formControl = input.parentElement
-    formControl.className = 'form-control success'
+    formControl.classList.add('success')
+    formControl.classList.remove('error')
 }
 
 function isEmail(email) {
