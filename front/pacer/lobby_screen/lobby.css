@@ -1,3 +1,8 @@
+:root {
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -67,7 +72,6 @@ label {
 }
 
 .btn2 {
-  display: inline-block;
   color: #666666;
   font-size: 16px;
   line-height: 1.4;
@@ -89,29 +93,29 @@ label {
 }
 
 .form-control small {
-  visibility: hidden;;
+  visibility: hidden;
 }
 
 .form-control.success input {
-  border-color: #2ecc71;
+  border-color: var(--success-color);
 }
 
 .form-control.error input {
-  border-color: #e74c3c;
+  border-color: var(--error-color);
 }
 
 .form-control.success i.fa-check-circle {
   display: unset;
-  color: #2ecc71;
+  color: var(--success-color);
 }
 
 .form-control.error i.fa-exclamation-circle {
   display: unset;
-  color: #e74c3c;
+  color: var(--error-color);
 }
 
 .form-control.error small {
-  color: #e74c3c;
+  color: var(--error-color);
   visibility: visible;
 }
 
