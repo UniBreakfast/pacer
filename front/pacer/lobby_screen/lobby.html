@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/894fdef4f3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="./lobby.css" />
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="forms-wrapper">
+
+      <form class="form" id="sign-up-form">
+        <h1>Sign Up</h1>
+        <div class="form-control">
+          <label for="">Full Name</label>
+          <input type="text" placeholder="Name..." id="fullname">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+
+        <div class="form-control">
+          <label for="">Email</label>
+          <input type="text" placeholder="Email adress..." id="email">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+
+        <div class="form-control">
+          <label for="">Username</label>
+          <input type="text" placeholder="Username..." id="username">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+
+        <div class="form-control">
+          <label for="">Password</label>
+          <input type="password" placeholder="********" id="password">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+
+        <div class="form-control">
+          <label for="">Repeat Password</label>
+          <input type="password" placeholder="********" id="password-check">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+
+        <div class="form-buttons">
+          <button class="btn1">Sign up</button>
+          <button type="button" class="btn2" onclick="showLoginForm()">Sign in &#10141; </button>
+        </div>
+      </form>
+
+      <!-- Login form -->
+
+      <form id="sign-in-form" hidden>
+        <h1>Sign In</h1>
+        <div class="form-control">
+          <label for="">Username</label>
+          <input type="text" placeholder="Username..." id="sign-in-username">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="">Password</label>
+          <input type="password" placeholder="********" id="sign-in-password">
+          <div class="icon">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <small>Error message</small>
+        </div>
+        <div class="form-buttons">
+          <button type="button" class="btn2" onclick="showSignUpForm()">&#8592; Sign Up</button>
+          <button class="btn1">Sign in</button>
+        </div>
+      </form>
+    </div>
+
+
+
+
+    <div class="content">
+      <div class="about-us">
+        <p>About us</p>
+      </div>
+      <div class="news">
+        <p>News</p>
+      </div>
+    </div>
+  </div>
+  <script src="./lobby.js"></script>
+</body>
+
+</html>

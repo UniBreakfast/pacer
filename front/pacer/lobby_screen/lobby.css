@@ -1,0 +1,131 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forms-wrapper {
+  width: 520px;
+  min-height: 100vh;
+  background: #fff;
+  border-radius: 2px;
+  position: relative;
+  padding: 0px 50px 50px 50px;
+}
+
+.content {
+  background-image: url("https://i.redd.it/cdfz5g8yfymz.png");
+  background-size: cover;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 45px;
+  position: relative;
+}
+
+.form-control input {
+  display: block;
+  border-width: 0 0 2px 0;
+  border-color: #dbdbdb;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+
+label {
+  font-size: 18px;
+  color: #999999;
+  line-height: 1.2;
+  padding-left: 2px;
+}
+
+.btn1 {
+  display: inline-block;
+  color: #fff;
+  background: linear-gradient(to bottom, #6cd5da, #7091ef, #303965);
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 15px 80px;
+  border-radius: 100px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+}
+
+.btn2 {
+  display: inline-block;
+  color: #666666;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px 100px;
+  border-radius: 100px;
+  outline: none;
+  border: none;
+  background-color: white;
+}
+
+.btn1:hover {
+  cursor: pointer;
+  background: linear-gradient(to bottom, #303965, #7091ef, #6cd5da);
+}
+
+.btn2:hover {
+  cursor: pointer;
+  color: #6cd5da;
+}
+
+.form-control small {
+  visibility: hidden;;
+}
+
+.form-control.success input {
+  border-color: #2ecc71;
+}
+
+.form-control.error input {
+  border-color: #e74c3c;
+}
+
+.form-control.success i.fa-check-circle {
+  display: unset;
+  color: #2ecc71;
+}
+
+.form-control.error i.fa-exclamation-circle {
+  display: unset;
+  color: #e74c3c;
+}
+
+.form-control.error small {
+  color: #e74c3c;
+  visibility: visible;
+}
+
+.form-control i {
+  display: none;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  position: absolute;
+  right: 0;
+  bottom: 32px;
+}
