@@ -28,22 +28,19 @@ const vaults = Promise.all(vaultNames.map(async name => {
 
 
 const clerk = {
-  async read(subject) {
-    const allVaults = await vaults
-    try { await allVaults[subject].load() }
+  async read(vaults, subject) {
+    try { await vaults[subject].load() }
     catch { window[subject] = cloneViaJSON(defaults[subject]) }
     return window[subject]
   },
 
-  async create(subject, dataToAdd=[]) {
-    const allVaults = await vaults
-
+  async create(vaults, subject, dataToAdd=[]) {
     dataToAdd = cloneViaJSON(assureArr(dataToAdd))
 
-    await allVaults[subject].load()
+    await vaults[subject].load()
 
     await Promise.all(dataToAdd.map(async item => {
-      if (!item.id) item.id = await giveId()
+      if (!item.id) item.id = await giveId(vaults)
       if (!item.created || !item.modified) {
         const date = new Date
         if (!item.created) item.created = date
@@ -52,7 +49,7 @@ const clerk = {
     }))
 
     window[subject].push(...dataToAdd)
-    await allVaults[subject].save()
+    await vaults[subject].save()
 
     return dataToAdd.map(item => item.id)
   },
@@ -61,14 +58,15 @@ const clerk = {
 
 
 export default async function operate(action, subject, data, credentials) {
-  return clerk[action](subject, data)
+  const allVaults = await vaults
+
+  return clerk[action](allVaults, subject, data)
 }
 
-async function giveId() {
-  const allVaults = await vaults
-  try { await allVaults.lastId.load() }
+async function giveId(vaults) {
+  try { await vaults.lastId.load() }
   catch { lastId = defaults.lastId }
   lastId++
-  await allVaults.lastId.save()
+  await vaults.lastId.save()
   return lastId
 }

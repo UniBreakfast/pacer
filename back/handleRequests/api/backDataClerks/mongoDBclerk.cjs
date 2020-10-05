@@ -1,10 +1,13 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const {PG_MONGO_HOST, PG_DB_NAME, PG_DB_USER, PG_DB_PASS} = process.env
 
 const uri = `mongodb+srv://${PG_DB_USER}:${PG_DB_PASS}@${
                 PG_MONGO_HOST}/${PG_DB_NAME}?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
+
+const assureArr = value => Array.isArray(value)? value : [value]
+
 
 let defaults, client, pgDB
 
@@ -15,6 +18,25 @@ const clerk = {
   async read(db, subject) {
     return await db.collection(subject).find().toArray()
   },
+
+  async create(db, subject, data=[]) {
+    data = assureArr(data)
+
+    data.forEach(item => {
+      if (item.id) {
+        item._id = ObjectId(item.id)
+        delete item.id
+      }
+      if (!item.created || !item.modified) {
+        const date = new Date
+        if (!item.created) item.created = date
+        if (!item.modified) item.modified = date
+      }
+    })
+
+    await db.collection(subject).insertMany(data)
+    return data.map(item => item._id)
+  }
 }
 
 
