@@ -4,6 +4,10 @@ const {PG_MYSQL_HOST, PG_DB_NAME, PG_DB_USER, PG_DB_PASS} = process.env
 
 const uri = `mysql://${PG_DB_USER}:${PG_DB_PASS}@${
                     PG_MYSQL_HOST}/${PG_DB_NAME}`
+
+const assureArr = value => Array.isArray(value)? value : [value]
+
+
 let defaults, connection
 connect()
 
@@ -31,6 +35,23 @@ const clerk = {
       else throw err
     }
   },
+
+  async create(subject, data=[]) {
+    try {
+      data = assureArr(data)
+
+      data.forEach(item => {
+        delete item.id
+        if (!item.created || !item.modified) {
+          const date = new Date
+          if (!item.created) item.created = date
+          if (!item.modified) item.modified = date
+        }
+      })
+
+      const result = await connection.query(`INSERT ${subject} () `)
+    } catch {}
+  }
 }
 
 
