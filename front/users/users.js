@@ -2,6 +2,9 @@ import Modal from '/Modal.js'
 
 import operate from '/frontOperate.js'
 
+import validate from '/center/validate.js'
+import {frontSchemata} from '/center/subjectSchemata.js'
+
 import resolveByHand from '/resolveByHand/resolveByHand.js'
 
 operate('read', 'users').then(showUsers).catch(console.error)
@@ -87,6 +90,11 @@ function buildUserItem(user) {
 
 async function createUser(formData) {
   const user = Object.fromEntries([...formData.entries()])
+  const issues = validate(user, frontSchemata.users)
+  if (issues) {
+    issues.forEach(issue => console.log(`${issue.field}: ${issue.issue}`))
+    throw 'invalid input'
+  }
   const id = await operate('create', 'users', [user])
   return id
 }

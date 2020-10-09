@@ -15,13 +15,14 @@ export default function validate(values, requirements) {
     }
 
     requirements[field].forEach(rule => {
-      const {is, has, match, not, isNot, hasNo, issue} = rule
-      if (is && !is.test(value)) return issues.push({field, issue})
-      if (has && !has.test(value)) return issues.push({field, issue})
-      if (match && !match.test(value)) return issues.push({field, issue})
-      if (not && not.test(value)) return issues.push({field, issue})
-      if (isNot && isNot.test(value)) return issues.push({field, issue})
-      if (hasNo && hasNo.test(value)) return issues.push({field, issue})
+      const {is, has, match, not, isNot, hasNo,
+        condition, conditions, isValid, issue} = rule
+      if (conditions && conditions.some(condition => !condition.test(value)) ||
+        condition && !condition.test(value))  return
+      if (isValid && !isValid(value) || is && !is.test(value) ||
+        has && !has.test(value) || match && !match.test(value) ||
+        not && not.test(value) || isNot && isNot.test(value) ||
+        hasNo && hasNo.test(value))  return issues.push({field, issue})
     })
   }
 
