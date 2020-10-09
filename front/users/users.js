@@ -3,22 +3,23 @@ import Modal from '/Modal.js'
 import operate from '/frontOperate.js'
 
 import validate from '/center/validate.js'
-import {frontSchemata} from '/center/subjectSchemata.js'
+import subjectSchemata from '/center/subjectSchemata.js'
 
 import resolveByHand from '/resolveByHand/resolveByHand.js'
 
 operate('read', 'users').then(showUsers).catch(console.error)
-  .then(showDataClerk)
+  .then(updateDataClerk)
 
 const dateToISOstr = date => JSON.stringify(date).slice(1,20).replace('T',' ')
 
 
 const userList = document.getElementById('userList')
 
+let schemata = subjectSchemata.generic
 
 fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
-showDataClerk()
+updateDataClerk()
 
 const width = 430,  left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
@@ -42,15 +43,18 @@ createUserBtn.onclick = () => createUserModal.show()
 
 
 
-async function showDataClerk() {
+async function updateDataClerk() {
   const label = fireBtn.children[0]
   const assignedAtFront = localStorage.PG_dataClerk
   if (assignedAtFront) {
-    if (assignedAtFront != 'backOperations') label.innerText = assignedAtFront
-    else {
+    if (assignedAtFront != 'backOperations') {
+      schemata = subjectSchemata.generic
+      label.innerText = assignedAtFront
+    } else {
       const db = await fetch('/api/db_in_use')
                           .then(resp => resp.text()).catch(console.error)
       label.innerText = db
+      schemata = subjectSchemata[db == 'mongoDB' ? 'hex' : 'num']
     }
     fireBtn.hidden = false
   } else fireBtn.hidden = true
@@ -90,7 +94,7 @@ function buildUserItem(user) {
 
 async function createUser(formData) {
   const user = Object.fromEntries([...formData.entries()])
-  const issues = validate(user, frontSchemata.users)
+  const issues = validate(user, schemata.users)
   if (issues) {
     issues.forEach(issue => console.log(`${issue.field}: ${issue.issue}`))
     throw 'invalid input'

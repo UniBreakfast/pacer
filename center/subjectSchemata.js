@@ -8,11 +8,11 @@ const idRule = [
   {not: /^[^\da-f]+$/, issue: "only numbers, hexadecimals or empty"}
 ]
 
-const numIdRule = {is: /\d*/, issue: "only positive integers" }
+const numIdRule = {is: /^\d*$/, issue: "only positive integer decimal numbers" }
 
 const hexIdRule = [
   {is: /^[\da-f]+$/, issue: "only hexadecimal digit characters"},
-  {condition: /[a-f]/, is: /^[\da-f]{24}$/,
+  {condition: /[\da-f]/, is: /^[\da-f]{24}$/,
     issue: "should be 24 characters long"},
 ]
 
@@ -21,8 +21,7 @@ issue: "if not empty should have a date/datetime format"}
 
 
 function produceSchemata(variant) {
-  const id = variant == 'front'? idRule :
-    variant == 'mongo'? hexIdRule : numIdRule
+  const id = variant == 'hex'? hexIdRule : variant == 'num'? numIdRule : idRule
   return {
     users: {
       id,
@@ -44,6 +43,8 @@ function produceSchemata(variant) {
 }
 
 
-export const frontSchemata = produceSchemata('front')
-export const mongoSchemata = produceSchemata('mongo')
-export const mysqlSchemata = produceSchemata('mysql')
+export default {
+  generic: produceSchemata(),
+  hex: produceSchemata('hex'),
+  num: produceSchemata('num')
+}
