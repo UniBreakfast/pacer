@@ -3,7 +3,7 @@ import Modal from '/Modal.js'
 import operate from '/frontOperate.js'
 
 import validate from '/center/validate.js'
-import subjectSchemata from '/center/subjectSchemata.js'
+import {frontSchemata} from '/center/subjectSchemata.js'
 
 import resolveByHand from '/resolveByHand/resolveByHand.js'
 
@@ -90,7 +90,7 @@ function buildUserItem(user) {
 
 async function createUser(formData) {
   const user = Object.fromEntries([...formData.entries()])
-  const issues = validate(user, subjectSchemata.users)
+  const issues = validate(user, frontSchemata.users)
   if (issues) {
     issues.forEach(issue => console.log(`${issue.field}: ${issue.issue}`))
     throw 'invalid input'
