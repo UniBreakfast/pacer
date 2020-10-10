@@ -8,4 +8,8 @@ import 'c4console'
 
 import './back/server.js'
 
+import bot from './back/telegramBot.js'
+
 import expert from './center/expert.js'
+
+global.bot = bot
