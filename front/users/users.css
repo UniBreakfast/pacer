@@ -144,3 +144,26 @@ footer button {
   bottom: 0;
   padding: 0 0 5px 8px;
 }
+
+.Modal-glass {
+  animation: fly-fade-in .4s ease-in-out forwards;
+  box-shadow: 0 0 0 100vh #8883;
+}
+
+.Modal-glass.hiding {
+  animation: fly-fade-out .2s ease-in-out forwards;
+}
+
+@keyframes fly-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fly-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}

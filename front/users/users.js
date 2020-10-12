@@ -34,6 +34,20 @@ const createUserModal = new Modal('users/create.htm', {top, left, width,
       if (!keepFilledBox.checked) createUserForm.reset()
       if (!keepOpenBox.checked) createUserModal.hide()
     }
+  },
+  onhide() {
+    this.glass.classList.add('hiding')
+    return new Promise(resolve => {
+      const hide = () => {
+        resolve()
+        this.glass.onanimationend = null
+        this.glass.classList.remove('hiding')
+      }
+      this.glass.onanimationend = hide
+      setTimeout(() => {
+        if (this.glass.classList.contains('hiding')) hide()
+      }, 999)
+    })
   }
 })
 
