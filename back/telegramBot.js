@@ -11,6 +11,9 @@ setImmediate(() => {
   bot.on('message', msg =>
     bot.sendMessage(msg.chat.id, 'Whatever your goal is, you can do it!'))
 
+  bot.on('polling_error', err =>
+    process.env.PORT ? process.exit(1) : console.error(err.message))
+
   adminId = +process.env.PG_ADMIN_CHAT
 
 })
