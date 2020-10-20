@@ -1,4 +1,5 @@
 import Modal from '/Modal.js'
+import Toaster from '/Toaster/Toaster.js'
 
 import operate from '/frontOperate.js'
 
@@ -7,9 +8,6 @@ import subjectSchemata from '/center/subjectSchemata.js'
 
 import resolveByHand from '/resolveByHand/resolveByHand.js'
 
-operate('read', 'users').then(showUsers).catch(console.error)
-  .then(updateDataClerk)
-
 const dateToISOstr = date => JSON.stringify(date).slice(1,20).replace('T',' ')
 
 
@@ -17,9 +15,6 @@ const userList = document.getElementById('userList')
 
 let schemata = subjectSchemata.generic
 
-fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
-
-updateDataClerk()
 
 const width = 430,  left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
@@ -51,8 +46,23 @@ const createUserModal = new Modal('users/create.htm', {top, left, width,
   }
 })
 
+
+const toaster = new Toaster({side: 'top-center', from: 'bottom', to: 'top',
+  limit: 9, life: 10, push: false, width: 60, gap: 10})
+
+
+fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
+
+
 createUserBtn.onclick = () => createUserModal.show()
 
+
+operate('read', 'users').then(showUsers).catch(console.error)
+  .then(updateDataClerk)
+
+
+
+updateDataClerk()
 
 
 
@@ -107,10 +117,11 @@ function buildUserItem(user) {
 }
 
 async function createUser(formData) {
+  toaster.clear()
   const user = Object.fromEntries([...formData.entries()])
   const issues = validate(user, schemata.users)
   if (issues) {
-    issues.forEach(issue => console.log(`${issue.field}: ${issue.issue}`))
+    issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
     throw 'invalid input'
   }
   const id = await operate('create', 'users', [user])
