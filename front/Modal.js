@@ -106,10 +106,12 @@ export default class Modal {
     if (this.onshow)  this.onshow(this.modal)
   }
 
-  hide() {
+  async hide() {
     if (!this.glass) return
 
-    if (this.onhide)  this.onhide()
+    if (this.onhide) {
+      await this.onhide()
+    }
     this.glass.hidden = true
 
     if (!this.inDOMwhenHidden) {

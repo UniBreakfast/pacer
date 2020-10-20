@@ -10,19 +10,20 @@ button {
   background-color: #777;
   border-radius: 99px;
   padding: 5px 25px;
-  box-shadow: 0 3px 5px #111;
+  box-shadow: 0 3px 5px #111, inset 0 -3px 6px #222, inset 0 3px 6px #ccc;
+  text-shadow: -1px -1px 2px #333, 1px 1px 2px #fff;
   transition: .2s;
 }
 
 button:focus, button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 7px #111;
+  box-shadow: 0 5px 7px #111, inset 0 -3px 6px #222, inset 0 3px 6px #ccc;
   outline: none;
 }
 
 button:active {
   transform: translateY(2px);
-  box-shadow: 0 1px 2px #111;
+  box-shadow: 0 1px 2px #111, inset 0 -3px 6px #222, inset 0 3px 6px #ccc;
 }
 
 input {
@@ -142,4 +143,27 @@ footer button {
   position: absolute;
   bottom: 0;
   padding: 0 0 5px 8px;
+}
+
+.Modal-glass {
+  animation: fly-fade-in .4s ease-in-out forwards;
+  box-shadow: 0 0 0 100vh #8883;
+}
+
+.Modal-glass.hiding {
+  animation: fly-fade-out .2s ease-in-out forwards;
+}
+
+@keyframes fly-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fly-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
