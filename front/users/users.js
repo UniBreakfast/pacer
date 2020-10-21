@@ -16,9 +16,12 @@ const userList = document.getElementById('userList')
 let schemata = subjectSchemata.generic
 
 
-const width = 430,  left = innerWidth/2 - width/2,  top = innerHeight/3.5
+const width = 430,  height = 455,
+  left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
-const createUserModal = new Modal('users/create.htm', {top, left, width,
+
+
+const createUserModal = new Modal('users/create.htm', {top, left, width, height,
   onshow() {
     cancelCreateBtn.onclick = () => createUserModal.hide()
 
@@ -30,20 +33,12 @@ const createUserModal = new Modal('users/create.htm', {top, left, width,
       if (!keepOpenBox.checked) createUserModal.hide()
     }
   },
-  onhide() {
-    this.glass.classList.add('hiding')
-    return new Promise(resolve => {
-      const hide = () => {
-        resolve()
-        this.glass.onanimationend = null
-        this.glass.classList.remove('hiding')
-      }
-      this.glass.onanimationend = hide
-      setTimeout(() => {
-        if (this.glass.classList.contains('hiding')) hide()
-      }, 999)
-    })
-  }
+  onhide,
+})
+
+const regUserModal = new Modal('users/register.htm', {top, left, width,
+  height: 310,
+  onhide,
 })
 
 
@@ -56,6 +51,8 @@ fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
 createUserBtn.onclick = () => createUserModal.show()
 
+regUserBtn.onclick = () => regUserModal.show()
+
 
 operate('read', 'users').then(showUsers).catch(console.error)
   .then(updateDataClerk)
@@ -65,7 +62,20 @@ operate('read', 'users').then(showUsers).catch(console.error)
 updateDataClerk()
 
 
-
+function onhide() {
+  this.glass.classList.add('hiding')
+  return new Promise(resolve => {
+    const hide = () => {
+      resolve()
+      this.glass.onanimationend = null
+      this.glass.classList.remove('hiding')
+    }
+    this.glass.onanimationend = hide
+    setTimeout(() => {
+      if (this.glass.classList.contains('hiding')) hide()
+    }, 999)
+  })
+}
 
 async function updateDataClerk() {
   const label = fireBtn.children[0]
@@ -126,7 +136,4 @@ async function createUser(formData) {
   }
   const id = await operate('create', 'users', [user])
   return id
-}
-
-function readUsers() {
 }
