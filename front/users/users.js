@@ -29,8 +29,8 @@ const createUserModal = new Modal('users/create.htm', {top, left, width, height,
       e.preventDefault()
       await createUser(new FormData(createUserForm))
       await operate('read', 'users').then(showUsers).catch(console.error)
-      if (!keepFilledBox.checked) createUserForm.reset()
-      if (!keepOpenBox.checked) createUserModal.hide()
+      if (!keepCreateFilledBox.checked) createUserForm.reset()
+      if (!keepCreateOpenBox.checked) createUserModal.hide()
     }
   },
   onhide,
@@ -38,6 +38,17 @@ const createUserModal = new Modal('users/create.htm', {top, left, width, height,
 
 const regUserModal = new Modal('users/register.htm', {top, left, width,
   height: 310,
+  onshow() {
+    cancelRegBtn.onclick = () => regUserModal.hide()
+
+    regUserForm.onsubmit = async e => {
+      e.preventDefault()
+      await registerUser(new FormData(regUserForm))
+      await operate('read', 'users').then(showUsers).catch(console.error)
+      if (!keepRegFilledBox.checked) regUserForm.reset()
+      if (!keepRegOpenBox.checked) regUserModal.hide()
+    }
+  },
   onhide,
 })
 
@@ -134,6 +145,19 @@ async function createUser(formData) {
     issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
     throw 'invalid input'
   }
+  const id = await operate('create', 'users', [user])
+  return id
+}
+
+async function registerUser(formData) {
+  toaster.clear()
+  const user = Object.fromEntries([...formData.entries()])
+  const issues = validate(user, schemata.registrants)
+  if (issues) {
+    issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
+    throw 'invalid input'
+  }
+  delete user.confirm
   const id = await operate('create', 'users', [user])
   return id
 }
