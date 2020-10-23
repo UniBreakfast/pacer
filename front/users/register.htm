@@ -1,11 +1,12 @@
 <div id="regUserModal" class="modal">
   <h3>Register as a user</h3>
-  <button type="reset">Reset</button>
+  <button id="resetRegFormBtn">Reset</button>
   <form id="regUserForm">
     <label>login: <input type="text" name="login"></label>
-    <label>password: <input type="text" name="password"></label>
-    <label>confirm password: <input type="text" name="confirm"></label>
+    <label>password: <input type="password" name="password"></label>
+    <label>confirm password: <input type="password" name="confirm"></label>
   </form>
+  <button id="seePassBtn">see</button>
   <div class="buttons">
     <div>
       <label>
@@ -32,6 +33,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    padding-right: 30px;
   }
 
   #regUserModal form label {
@@ -40,7 +42,20 @@
     margin: 4px 0;
   }
 
-  #regUserModal>button {
+  #resetRegFormBtn {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+  }
+
+  #seePassBtn {
+    position: absolute;
+    right: 25px;
+    top: 130px;
+    padding: 25px 5px;
+  }
+
+  #resetRegFormBtn {
     position: absolute;
     top: 80px;
     left: 30px;

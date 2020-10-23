@@ -16,14 +16,17 @@ const userList = document.getElementById('userList')
 let schemata = subjectSchemata.generic
 
 
-const width = 430,  height = 455,
+const width = 430,  height1 = 455,  height2 = 310,
   left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
 
 
-const createUserModal = new Modal('users/create.htm', {top, left, width, height,
+const createUserModal = new Modal('users/create.htm', {
+  top, left, width, height: height1,
   onshow() {
     cancelCreateBtn.onclick = () => createUserModal.hide()
+
+    resetCreateFormBtn.onclick = () => createUserForm.reset()
 
     createUserForm.onsubmit = async e => {
       e.preventDefault()
@@ -36,10 +39,14 @@ const createUserModal = new Modal('users/create.htm', {top, left, width, height,
   onhide,
 })
 
-const regUserModal = new Modal('users/register.htm', {top, left, width,
-  height: 310,
+const regUserModal = new Modal('users/register.htm', {
+  top, left, width, height: height2,
   onshow() {
     cancelRegBtn.onclick = () => regUserModal.hide()
+
+    resetRegFormBtn.onclick = () => regUserForm.reset()
+
+    seePassBtn.onclick = handleSee
 
     regUserForm.onsubmit = async e => {
       e.preventDefault()
@@ -152,12 +159,28 @@ async function createUser(formData) {
 async function registerUser(formData) {
   toaster.clear()
   const user = Object.fromEntries([...formData.entries()])
-  const issues = validate(user, schemata.registrants)
-  if (issues) {
+  const issues = validate(user, schemata.registrants) || []
+  if (user.password != user.confirm) {
+    issues.push({field: 'confirm password',
+                  issue: 'should be exactly the same password'})
+  }
+  if (issues.length) {
     issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
     throw 'invalid input'
   }
   delete user.confirm
   const id = await operate('create', 'users', [user])
   return id
+}
+
+function handleSee() {
+  if (this.matches('.active')) {
+    regUserForm.password.type = 'password'
+    regUserForm.confirm.type = 'password'
+    this.classList.remove('active')
+  } else {
+    regUserForm.password.type = 'text'
+    regUserForm.confirm.type = 'text'
+    this.classList.add('active')
+  }
 }
