@@ -16,7 +16,7 @@ const userList = document.getElementById('userList')
 let schemata = subjectSchemata.generic
 
 
-const width = 430,  height1 = 455,  height2 = 310,
+const width = 430,  height1 = 455,  height2 = 310,  height3 = 250,
   left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
 
@@ -25,8 +25,6 @@ const createUserModal = new Modal('users/create.htm', {
   top, left, width, height: height1,
   onshow() {
     cancelCreateBtn.onclick = () => createUserModal.hide()
-
-    resetCreateFormBtn.onclick = () => createUserForm.reset()
 
     createUserForm.onsubmit = async e => {
       e.preventDefault()
@@ -44,9 +42,7 @@ const regUserModal = new Modal('users/register.htm', {
   onshow() {
     cancelRegBtn.onclick = () => regUserModal.hide()
 
-    resetRegFormBtn.onclick = () => regUserForm.reset()
-
-    seePassBtn.onclick = handleSee
+    seeRegPassBtn.onclick = handleSee
 
     regUserForm.onsubmit = async e => {
       e.preventDefault()
@@ -54,6 +50,21 @@ const regUserModal = new Modal('users/register.htm', {
       await operate('read', 'users').then(showUsers).catch(console.error)
       if (!keepRegFilledBox.checked) regUserForm.reset()
       if (!keepRegOpenBox.checked) regUserModal.hide()
+    }
+  },
+  onhide,
+})
+
+const loginModal = new Modal('users/login.htm', {
+  top, left, width, height: height3,
+  onshow() {
+    cancelLoginBtn.onclick = () => loginModal.hide()
+
+    seeLoginPassBtn.onclick = handleSee
+
+    loginForm.onsubmit = async e => {
+      e.preventDefault()
+      await loginUser(new FormData(loginForm))
     }
   },
   onhide,
@@ -70,6 +81,8 @@ fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 createUserBtn.onclick = () => createUserModal.show()
 
 regUserBtn.onclick = () => regUserModal.show()
+
+authUserBtn.onclick = () => loginModal.show()
 
 
 operate('read', 'users').then(showUsers).catch(console.error)
@@ -174,13 +187,14 @@ async function registerUser(formData) {
 }
 
 function handleSee() {
-  if (this.matches('.active')) {
-    regUserForm.password.type = 'password'
-    regUserForm.confirm.type = 'password'
+  const form = this.previousElementSibling
+  if (this.classList.contains('active')) {
+    form.password.type = 'password'
+    if (form == regUserForm) form.confirm.type = 'password'
     this.classList.remove('active')
   } else {
-    regUserForm.password.type = 'text'
-    regUserForm.confirm.type = 'text'
+    form.password.type = 'text'
+    if (form == regUserForm) form.confirm.type = 'text'
     this.classList.add('active')
   }
 }
