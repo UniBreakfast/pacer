@@ -16,34 +16,47 @@ const userList = document.getElementById('userList')
 let schemata = subjectSchemata.generic
 
 
-const width = 430,  left = innerWidth/2 - width/2,  top = innerHeight/3.5
+const width = 430,  height1 = 455,  height2 = 310,
+  left = innerWidth/2 - width/2,  top = innerHeight/3.5
 
-const createUserModal = new Modal('users/create.htm', {top, left, width,
+
+
+const createUserModal = new Modal('users/create.htm', {
+  top, left, width, height: height1,
   onshow() {
     cancelCreateBtn.onclick = () => createUserModal.hide()
+
+    resetCreateFormBtn.onclick = () => createUserForm.reset()
 
     createUserForm.onsubmit = async e => {
       e.preventDefault()
       await createUser(new FormData(createUserForm))
       await operate('read', 'users').then(showUsers).catch(console.error)
-      if (!keepFilledBox.checked) createUserForm.reset()
-      if (!keepOpenBox.checked) createUserModal.hide()
+      if (!keepCreateFilledBox.checked) createUserForm.reset()
+      if (!keepCreateOpenBox.checked) createUserModal.hide()
     }
   },
-  onhide() {
-    this.glass.classList.add('hiding')
-    return new Promise(resolve => {
-      const hide = () => {
-        resolve()
-        this.glass.onanimationend = null
-        this.glass.classList.remove('hiding')
-      }
-      this.glass.onanimationend = hide
-      setTimeout(() => {
-        if (this.glass.classList.contains('hiding')) hide()
-      }, 999)
-    })
-  }
+  onhide,
+})
+
+const regUserModal = new Modal('users/register.htm', {
+  top, left, width, height: height2,
+  onshow() {
+    cancelRegBtn.onclick = () => regUserModal.hide()
+
+    resetRegFormBtn.onclick = () => regUserForm.reset()
+
+    seePassBtn.onclick = handleSee
+
+    regUserForm.onsubmit = async e => {
+      e.preventDefault()
+      await registerUser(new FormData(regUserForm))
+      await operate('read', 'users').then(showUsers).catch(console.error)
+      if (!keepRegFilledBox.checked) regUserForm.reset()
+      if (!keepRegOpenBox.checked) regUserModal.hide()
+    }
+  },
+  onhide,
 })
 
 
@@ -56,6 +69,8 @@ fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
 createUserBtn.onclick = () => createUserModal.show()
 
+regUserBtn.onclick = () => regUserModal.show()
+
 
 operate('read', 'users').then(showUsers).catch(console.error)
   .then(updateDataClerk)
@@ -65,7 +80,20 @@ operate('read', 'users').then(showUsers).catch(console.error)
 updateDataClerk()
 
 
-
+function onhide() {
+  this.glass.classList.add('hiding')
+  return new Promise(resolve => {
+    const hide = () => {
+      resolve()
+      this.glass.onanimationend = null
+      this.glass.classList.remove('hiding')
+    }
+    this.glass.onanimationend = hide
+    setTimeout(() => {
+      if (this.glass.classList.contains('hiding')) hide()
+    }, 999)
+  })
+}
 
 async function updateDataClerk() {
   const label = fireBtn.children[0]
@@ -128,5 +156,31 @@ async function createUser(formData) {
   return id
 }
 
-function readUsers() {
+async function registerUser(formData) {
+  toaster.clear()
+  const user = Object.fromEntries([...formData.entries()])
+  const issues = validate(user, schemata.registrants) || []
+  if (user.password != user.confirm) {
+    issues.push({field: 'confirm password',
+                  issue: 'should be exactly the same password'})
+  }
+  if (issues.length) {
+    issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
+    throw 'invalid input'
+  }
+  delete user.confirm
+  const id = await operate('create', 'users', [user])
+  return id
+}
+
+function handleSee() {
+  if (this.matches('.active')) {
+    regUserForm.password.type = 'password'
+    regUserForm.confirm.type = 'password'
+    this.classList.remove('active')
+  } else {
+    regUserForm.password.type = 'text'
+    regUserForm.confirm.type = 'text'
+    this.classList.add('active')
+  }
 }

@@ -1,0 +1,103 @@
+<div id="regUserModal" class="modal">
+  <h3>Register as a user</h3>
+  <button id="resetRegFormBtn">Reset</button>
+  <form id="regUserForm">
+    <label>login: <input type="text" name="login"></label>
+    <label>password: <input type="password" name="password"></label>
+    <label>confirm password: <input type="password" name="confirm"></label>
+  </form>
+  <button id="seePassBtn">see</button>
+  <div class="buttons">
+    <div>
+      <label>
+        <input type="checkbox" id="keepRegFilledBox">
+        don't reset on
+      </label>
+      <label>
+        <input type="checkbox" id="keepRegOpenBox">
+        don't close on
+      </label>
+    </div>
+    <button type="submit" form="regUserForm">Register</button>
+    <button id="cancelRegBtn">Cancel</button>
+  </div>
+</div>
+
+<style>
+  #regUserModal {
+    text-align: center;
+    position: relative;
+  }
+
+  #regUserModal form {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding-right: 30px;
+  }
+
+  #regUserModal form label {
+    width: 330px;
+    text-align: right;
+    margin: 4px 0;
+  }
+
+  #resetRegFormBtn {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+  }
+
+  #seePassBtn {
+    position: absolute;
+    right: 25px;
+    top: 130px;
+    padding: 25px 5px;
+  }
+
+  #resetRegFormBtn {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+  }
+
+  #regUserModal input {
+    text-align: center;
+  }
+
+  #regUserModal [type="datetime-local"] {
+    padding-left: 12px;
+  }
+
+  #regUserModal>.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 350px;
+    margin: auto;
+    padding: 20px 0;
+  }
+
+  #regUserModal>.buttons>div {
+    display: flex;
+    flex-flow: column;
+  }
+
+  #regUserModal>.buttons label {
+    margin-bottom: 3px;
+  }
+
+  #regUserModal>.buttons input {
+    transform: translateY(1px);
+    box-shadow: 0 0 0 2px #eee, 0 0 0 0 #bbb, inset 0 1px 3px #333
+  }
+
+  #regUserModal>.buttons label:hover {
+    z-index: 1;
+  }
+
+  #regUserModal>.buttons label:hover>input {
+    transform: translateY(0);
+    box-shadow: 0 0 0 2px #eee, 0 4px 9px 4px #bbb, inset 0 1px 3px #333;
+  }
+</style>
