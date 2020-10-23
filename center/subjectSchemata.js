@@ -47,6 +47,10 @@ function produceSchemata(variant) {
       login: loginRules,
       password: passRules,
       confirm: [],
+    },
+    visitors: {
+      login: loginRules,
+      password: passRules,
     }
   }
 }

@@ -7,6 +7,7 @@ const operables = {
     check users
     register users
     authorize users
+    verify users
   `),
 
   hardcodeRAM: list(`
@@ -17,6 +18,7 @@ const operables = {
   localStorage: list(`
     read users
     create users
+    authorize users
   `),
 
   globalVault: list(`
