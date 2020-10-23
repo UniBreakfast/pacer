@@ -186,6 +186,17 @@ async function registerUser(formData) {
   return id
 }
 
+async function authenticateUser(formData) {
+  toaster.clear()
+  const user = Object.fromEntries([...formData.entries()])
+  const issues = validate(user, schemata.registrants)
+  if (issues) {
+    issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
+    throw 'invalid input'
+  }
+  const token = await operate('auth', 'users', [user])
+}
+
 function handleSee() {
   const form = this.previousElementSibling
   if (this.classList.contains('active')) {
@@ -197,4 +208,12 @@ function handleSee() {
     if (form == regUserForm) form.confirm.type = 'text'
     this.classList.add('active')
   }
+}
+
+function updateRecognizedUser() {
+
+}
+
+function checkIfUserRecognized() {
+
 }
