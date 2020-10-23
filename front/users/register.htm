@@ -1,12 +1,12 @@
 <div id="regUserModal" class="modal">
   <h3>Register as a user</h3>
-  <button id="resetRegFormBtn">Reset</button>
+  <button type="reset" form="regUserForm">Reset</button>
   <form id="regUserForm">
     <label>login: <input type="text" name="login"></label>
     <label>password: <input type="password" name="password"></label>
     <label>confirm password: <input type="password" name="confirm"></label>
   </form>
-  <button id="seePassBtn">see</button>
+  <button id="seeRegPassBtn">see</button>
   <div class="buttons">
     <div>
       <label>
@@ -42,31 +42,22 @@
     margin: 4px 0;
   }
 
-  #resetRegFormBtn {
+  #regUserModal [type="reset"] {
     position: absolute;
     top: 80px;
-    left: 30px;
+    left: 45px;
+    padding: 5px 10px;
   }
 
-  #seePassBtn {
+  #seeRegPassBtn {
     position: absolute;
     right: 25px;
     top: 130px;
     padding: 25px 5px;
   }
 
-  #resetRegFormBtn {
-    position: absolute;
-    top: 80px;
-    left: 30px;
-  }
-
   #regUserModal input {
     text-align: center;
-  }
-
-  #regUserModal [type="datetime-local"] {
-    padding-left: 12px;
   }
 
   #regUserModal>.buttons {
