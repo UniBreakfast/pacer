@@ -50,7 +50,18 @@ const clerk = {
   verify(_, {login, token}) {
     const users = ls.PG_users? parse(ls.PG_users) : []
     return !!users.find(user => user.login == login && user.token == token)
-  }
+  },
+
+  logout(_, {login, token}) {
+    const users = ls.PG_users? parse(ls.PG_users) : []
+    const user =
+      users.find(user => user.login == login && user.token == token)
+    if (user) {
+      delete user.token
+      ls.PG_users = stringify(users)
+    }
+  },
+
 }
 
 

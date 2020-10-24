@@ -8,6 +8,7 @@ const operables = {
     register users
     authorize users
     verify users
+    logout users
   `),
 
   hardcodeRAM: list(`
@@ -20,6 +21,7 @@ const operables = {
     create users
     authorize users
     verify users
+    logout users
   `),
 
   globalVault: list(`
@@ -30,11 +32,17 @@ const operables = {
   backOperations: list(`
     read users
     create users
+    authorize users
+    verify users
+    logout users
   `),
 
   mongoDB: list(`
     read users
     create users
+    authorize users
+    verify users
+    logout users
   `),
 
   mySQL: list(`

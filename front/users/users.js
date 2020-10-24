@@ -81,12 +81,10 @@ const toaster = new Toaster({side: 'top-center', from: 'bottom', to: 'top',
 
 fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
-
 createUserBtn.onclick = () => createUserModal.show()
-
 regUserBtn.onclick = () => regUserModal.show()
-
 authUserBtn.onclick = () => loginModal.show()
+logOutBtn.onclick = logOut
 
 
 checkVisitor()
@@ -241,4 +239,14 @@ async function checkIfUserRecognized() {
 async function checkVisitor() {
   if (await checkIfUserRecognized()) updateRecognizedUser(localStorage.PG_user)
   else updateRecognizedUser('guest')
+}
+
+async function logOut() {
+  if (localStorage.PG_authToken && localStorage.PG_user) {
+    const user = {login: localStorage.PG_user, token: localStorage.PG_authToken}
+    operate('logout', 'users', user)
+  }
+  delete localStorage.PG_authToken
+  delete localStorage.PG_user
+  updateRecognizedUser('guest')
 }
