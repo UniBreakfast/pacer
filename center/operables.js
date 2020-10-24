@@ -19,6 +19,7 @@ const operables = {
     read users
     create users
     authorize users
+    verify users
   `),
 
   globalVault: list(`

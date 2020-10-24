@@ -45,6 +45,11 @@ const clerk = {
       ls.PG_users = stringify(users)
       return token
     } else return false
+  },
+
+  verify(_, {login, token}) {
+    const users = ls.PG_users? parse(ls.PG_users) : []
+    return !!users.find(user => user.login == login && user.token == token)
   }
 }
 
