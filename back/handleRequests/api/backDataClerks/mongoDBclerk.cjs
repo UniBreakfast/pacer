@@ -36,6 +36,10 @@ const clerk = {
 
     await db.collection(subject).insertMany(data)
     return data.map(item => item._id)
+  },
+
+  async authorize(db, _, visitor) {
+    const user = await db.collection('users').findOne()
   }
 }
 

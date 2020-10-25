@@ -49,6 +49,10 @@ const operables = {
     read users
     create users
   `),
+
+  strict: list(`
+    create users
+  `)
 }
 
 
