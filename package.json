@@ -23,6 +23,7 @@
     "c4console": "^1.0.8",
     "mongodb": "^3.6.2",
     "mysql": "^2.18.1",
-    "node-telegram-bot-api": "^0.50.0"
+    "node-telegram-bot-api": "^0.50.0",
+    "up2require": "^1.1.4"
   }
 }
