@@ -116,7 +116,7 @@ async function updateDataClerk() {
       schemata = subjectSchemata.generic
       label.innerText = assignedAtFront
     } else {
-      const db = await fetch('/api/db_in_use')
+      const db = await fetch('./api/db_in_use')
                           .then(resp => resp.text()).catch(console.error)
       label.innerText = db
       schemata = subjectSchemata[db == 'mongoDB' ? 'hex' : 'num']

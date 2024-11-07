@@ -17,7 +17,7 @@ const operateViaDC = getDataClerk()
 
 async function getDataClerk() {
   if (!localStorage.PG_dataClerk) {
-    const db = await fetch('/api/db_in_use')
+    const db = await fetch('./api/db_in_use')
                       .then(resp => resp.text()).catch(console.error)
 
     const choice = await resolveByHand(
