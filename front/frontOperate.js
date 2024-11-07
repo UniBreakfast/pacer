@@ -1,4 +1,4 @@
-import operables from '/center/operables.js'
+import operables from './center/operables.js'
 
 import resolveByHand from './resolveByHand/resolveByHand.js'
 
