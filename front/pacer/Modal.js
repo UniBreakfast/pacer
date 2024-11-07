@@ -58,7 +58,7 @@ export class Modal {
     }
 
     this.modal.addEventListener('mousedown', e => {
-      if (e.path.some(el =>
+      if (e.composedPath().some(el =>
         'INPUT,SELECT,TEXTAREA,BUTTON'.includes(el.tagName))) return
 
       document.body.addEventListener('mousemove', handleMove)

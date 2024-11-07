@@ -1,5 +1,5 @@
-import * as data from '/center/data.js'
-import defaults from '/center/defaultSubjectData.js'
+import * as data from '../center/data.js'
+import defaults from '../center/defaultSubjectData.js'
 
 const {stringify, parse} = JSON,  cloneViaJSON = data => parse(stringify(data))
 

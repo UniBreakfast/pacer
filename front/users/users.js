@@ -1,14 +1,14 @@
-import Modal from '/Modal.js'
-import Toaster from '/Toaster/Toaster.js'
+import Modal from '../Modal.js'
+import Toaster from '../Toaster/Toaster.js'
 
-import operate from '/frontOperate.js'
+import operate from '../frontOperate.js'
 
-import validate from '/center/validate.js'
-import subjectSchemata from '/center/subjectSchemata.js'
+import validate from '../center/validate.js'
+import subjectSchemata from '../center/subjectSchemata.js'
 
-import resolveByHand from '/resolveByHand/resolveByHand.js'
+import resolveByHand from '../resolveByHand/resolveByHand.js'
 
-const dateToISOstr = date => JSON.stringify(date).slice(1,20).replace('T',' ')
+const dateToISOstr = date => JSON.stringify(date)?.slice(1,20).replace('T',' ')
 
 
 const userList = document.getElementById('userList')
@@ -120,7 +120,7 @@ async function updateDataClerk() {
       schemata = subjectSchemata.generic
       label.innerText = assignedAtFront
     } else {
-      const db = await fetch('/api/db_in_use')
+      const db = await fetch('./api/db_in_use')
                           .then(resp => resp.text()).catch(console.error)
       label.innerText = db
       schemata = subjectSchemata[db == 'mongoDB' ? 'hex' : 'num']

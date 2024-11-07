@@ -1,4 +1,4 @@
-import defaults from '/center/defaultSubjectData.js'
+import defaults from '../center/defaultSubjectData.js'
 
 import {rndStrDashed} from '/center/rndStr.js'
 
@@ -73,4 +73,6 @@ export default async function operate(action, subject, data) {
 function giveId() {
   return ls.PG_lastId = ls.PG_lastId?
                         +ls.PG_lastId+1 : defaults.lastId
+//   return localStorage.PG_lastId = localStorage.PG_lastId?
+//                         +localStorage.PG_lastId+1 : defaults.lastId
 }

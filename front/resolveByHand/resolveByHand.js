@@ -1,4 +1,4 @@
-import Modal from '/Modal.js'
+import Modal from '../Modal.js'
 
 const fillcb = (modal, { msg, options, handler }) => {
   const [header, buttonsDiv] = modal.querySelectorAll('h3, .buttons')
