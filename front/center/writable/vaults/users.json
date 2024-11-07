@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "login": "Bob",
+    "password": "silent",
+    "hash": "to_be_generated",
+    "created": "2020-09-27T05:01:17.109Z",
+    "modified": "2020-09-27T05:01:17.109Z"
+  },
+  {
+    "id": 2,
+    "login": "The last airbender",
+    "password": "123",
+    "hash": "to_be_generated",
+    "created": "2020-09-27T05:01:17.109Z",
+    "modified": "2020-09-27T05:01:17.109Z"
+  },
+  {
+    "id": 3,
+    "login": "Teresa",
+    "password": "very_very_long_password",
+    "hash": "to_be_generated",
+    "created": "2020-09-27T05:01:17.109Z",
+    "modified": "2020-09-27T05:01:17.109Z"
+  }
+]
