@@ -1,6 +1,6 @@
 import fs from '../frontFS.js'
 import GlobalVault from '../GlobalVault.js'
-import defaults from '/center/defaultSubjectData.js'
+import defaults from '../center/defaultSubjectData.js'
 
 
 const {stringify, parse} = JSON,  cloneViaJSON = data => parse(stringify(data))
