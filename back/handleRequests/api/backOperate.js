@@ -4,8 +4,11 @@ const fsp = fs.promises
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
+import validate from '../../../center/validate.js'
+
 import operables from '../../../center/operables.js'
 import defaults from '../../../center/defaultSubjectData.js'
+import subjectSchemata from '../../../center/subjectSchemata.js'
 
 
 export const dataClerks = {
@@ -13,7 +16,7 @@ export const dataClerks = {
   mySQL: () => require('./backDataClerks/mySQLclerk.cjs')(defaults),
 }
 
-let operateViaDC, fireOldDC
+let operateViaDC, fireOldDC, schemata
 
 // bounce required in order for the top level require(config) to be done first
 setImmediate(assignDataClerk)
@@ -37,6 +40,9 @@ export async function assignDataClerk(clerkName) {
     process.env.PG_DB_IN_USE = Object.keys(dataClerks)[0]
 
   ;[operateViaDC, fireOldDC] = dataClerks[process.env.PG_DB_IN_USE]()
+
+  schemata =
+    subjectSchemata[process.env.PG_DB_IN_USE == 'mongoDB' ? 'hex' : 'num']
 }
 
 
@@ -48,6 +54,16 @@ export async function operate(action, subject, data, credentials) {
   const clerkName = process.env.PG_DB_IN_USE
   if (!operables[clerkName].includes(operation))
     throw `operation '${operation}' is not supported by ${clerkName} clerk`
+
+  if (operables.strict.includes(operation)) {
+    if (Array.isArray(data)) {
+      const issues = data.map(item => validate(item, schemata[subject]))
+      if (issues.filter(Boolean).length) return {issues}
+    } else {
+      const issues = validate(data, schemata[subject])
+      if (issues) return {issues}
+    }
+  }
 
   if (!operateViaDC) await assignDataClerk()
   return await operateViaDC(action, subject, data)

@@ -1,13 +1,18 @@
 import defaults from '../center/defaultSubjectData.js'
 
+import {rndStrDashed} from '/center/rndStr.js'
+
+
 const {stringify, parse} = JSON,  cloneViaJSON = data => parse(stringify(data))
 
 const assureArr = value => Array.isArray(value)? value : [value]
 
+const ls = localStorage
+
 
 const clerk = {
   read(subject) {
-    try { return parse(localStorage['PG_'+subject]) }
+    try { return parse(ls['PG_'+subject]) }
     catch { return defaults[subject] }
   },
 
@@ -25,10 +30,38 @@ const clerk = {
       }
     })
 
-    localStorage['PG_'+subject] = stringify(data.concat(dataToAdd))
+    ls['PG_'+subject] = stringify(data.concat(dataToAdd))
 
     return dataToAdd.map(item => item.id)
   },
+
+  authorize(_, {login, password}) {
+    const users = ls.PG_users? parse(ls.PG_users) : []
+    const user =
+      users.find(user => user.login == login && user.password == password)
+    if (user) {
+      const token = rndStrDashed()
+      user.token = token
+      ls.PG_users = stringify(users)
+      return token
+    } else return false
+  },
+
+  verify(_, {login, token}) {
+    const users = ls.PG_users? parse(ls.PG_users) : []
+    return !!users.find(user => user.login == login && user.token == token)
+  },
+
+  logout(_, {login, token}) {
+    const users = ls.PG_users? parse(ls.PG_users) : []
+    const user =
+      users.find(user => user.login == login && user.token == token)
+    if (user) {
+      delete user.token
+      ls.PG_users = stringify(users)
+    }
+  },
+
 }
 
 
@@ -38,6 +71,8 @@ export default async function operate(action, subject, data) {
 
 
 function giveId() {
-  return localStorage.PG_lastId = localStorage.PG_lastId?
-                        +localStorage.PG_lastId+1 : defaults.lastId
+  return ls.PG_lastId = ls.PG_lastId?
+                        +ls.PG_lastId+1 : defaults.lastId
+//   return localStorage.PG_lastId = localStorage.PG_lastId?
+//                         +localStorage.PG_lastId+1 : defaults.lastId
 }

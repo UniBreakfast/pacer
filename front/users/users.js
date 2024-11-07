@@ -64,7 +64,11 @@ const loginModal = new Modal('users/login.htm', {
 
     loginForm.onsubmit = async e => {
       e.preventDefault()
-      await loginUser(new FormData(loginForm))
+      const success = await authenticateUser(new FormData(loginForm))
+      if (success) {
+        loginForm.reset()
+        loginModal.hide()
+      }
     }
   },
   onhide,
@@ -77,13 +81,13 @@ const toaster = new Toaster({side: 'top-center', from: 'bottom', to: 'top',
 
 fireBtn.onclick = () => { delete localStorage.PG_dataClerk; location.reload() }
 
-
 createUserBtn.onclick = () => createUserModal.show()
-
 regUserBtn.onclick = () => regUserModal.show()
-
 authUserBtn.onclick = () => loginModal.show()
+logOutBtn.onclick = logOut
 
+
+checkVisitor()
 
 operate('read', 'users').then(showUsers).catch(console.error)
   .then(updateDataClerk)
@@ -186,6 +190,26 @@ async function registerUser(formData) {
   return id
 }
 
+async function authenticateUser(formData) {
+  toaster.clear()
+  const user = Object.fromEntries([...formData.entries()])
+  const issues = validate(user, schemata.visitors)
+  if (issues) {
+    issues.forEach(issue => toaster.log(`${issue.field}: ${issue.issue}`))
+    throw 'invalid input'
+  }
+  const token = await operate('authorize', 'users', user)
+  if (token) {
+    localStorage.PG_authToken = token
+    localStorage.PG_user = user.login
+    updateRecognizedUser(user.login)
+    toaster.log('logged in as ' + user.login)
+    return true
+  } else {
+    toaster.log('login and/or password: incorrect')
+  }
+}
+
 function handleSee() {
   const form = this.previousElementSibling
   if (this.classList.contains('active')) {
@@ -197,4 +221,32 @@ function handleSee() {
     if (form == regUserForm) form.confirm.type = 'text'
     this.classList.add('active')
   }
+  form.password.focus()
+}
+
+function updateRecognizedUser(login) {
+  currentUserLabel.innerText = login
+}
+
+async function checkIfUserRecognized() {
+  if (localStorage.PG_authToken && localStorage.PG_user) {
+    const user = {login: localStorage.PG_user, token: localStorage.PG_authToken}
+    const recognized = await operate('verify', 'users', user)
+    return recognized
+  } else return false
+}
+
+async function checkVisitor() {
+  if (await checkIfUserRecognized()) updateRecognizedUser(localStorage.PG_user)
+  else updateRecognizedUser('guest')
+}
+
+async function logOut() {
+  if (localStorage.PG_authToken && localStorage.PG_user) {
+    const user = {login: localStorage.PG_user, token: localStorage.PG_authToken}
+    operate('logout', 'users', user)
+  }
+  delete localStorage.PG_authToken
+  delete localStorage.PG_user
+  updateRecognizedUser('guest')
 }
