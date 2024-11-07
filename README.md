@@ -2,6 +2,10 @@
 
 ## Don't mind the repository name - it's not the Pacer of course
 
+It's a continuation of an earlier [project with multiple datasources](https://github.com/UniBreakfast/poc-multiple-datasources).
+
+For complete experience you would have to clone it locally, add a config file with your accounts, connections strings, tokens etc. and run the server with Node.js
+
 [config.cjs](https://gist.github.com/UniBreakfast/0c719583fc8f9a16361ab28136884a43)
 
 ![image](https://github.com/user-attachments/assets/bc92c8dc-f1ed-47e7-b6e9-32bc2d8baebd)
