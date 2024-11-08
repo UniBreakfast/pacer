@@ -1,6 +1,6 @@
 import defaults from '../center/defaultSubjectData.js'
 
-import {rndStrDashed} from '/center/rndStr.js'
+import {rndStrDashed} from '../center/rndStr.js'
 
 
 const {stringify, parse} = JSON,  cloneViaJSON = data => parse(stringify(data))
